@@ -3,7 +3,7 @@ import React from 'react';
 function Gdpr() {
   return (
     <div className='posts'>
-      Hantering av personuppgifter Sedan 25 maj 2018 gäller GDPR
+      Hantering av personuppgifter Sedan 25 maj 2018 gäller GDPRasd
       (dataskyddsförordningen) i hela EU och reglerar hantering av registrerade
       personuppgifter. Nedan följer information om hur vi hanterar dina
       personuppgifter. För att läsa mer om GDPR hänvisas till Datainspektionens
