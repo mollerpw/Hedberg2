@@ -12,7 +12,6 @@ const Apply = () => {
   const { currentUser } = useContext(AuthContext) || null;
   const { applications } = useContext(ApplyContext) || null;
   const [myApplication, setMyApplication] = useState();
-  console.log(currentUser);
 
   useEffect(() => {
     if (currentUser) {

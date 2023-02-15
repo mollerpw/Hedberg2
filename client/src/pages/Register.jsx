@@ -64,7 +64,7 @@ const Register = () => {
             placeholder='Lösenord'
             name='password'
             onChange={handleChange}
-            minLength='2'
+            minLength='4'
           />
           <button onClick={handleSubmit}>Registrera</button>
           {err && <p>{err}</p>}
