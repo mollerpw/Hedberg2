@@ -13,6 +13,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Apply from './pages/Apply';
 import Winners from './pages/Winners';
+import Gdpr from './pages/Gdpr';
+import Contact from './pages/Contact';
+import Admin from './pages/Admin';
 import './style.scss';
 
 const Layout = () => {
@@ -57,6 +60,18 @@ const router = createBrowserRouter([
       {
         path: '/winners',
         element: <Winners />,
+      },
+      {
+        path: '/Gdpr',
+        element: <Gdpr />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
+      },
+      {
+        path: '/admin',
+        element: <Admin />,
       },
     ],
   },

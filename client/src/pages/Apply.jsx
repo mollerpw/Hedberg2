@@ -12,6 +12,11 @@ const Apply = () => {
   const { currentUser } = useContext(AuthContext) || null;
   const { applications } = useContext(ApplyContext) || null;
   const [myApplication, setMyApplication] = useState();
+  const navigate = useNavigate();
+
+  if (currentUser?.role === 'admin') {
+    navigate('/admin');
+  }
 
   useEffect(() => {
     if (currentUser) {
@@ -30,8 +35,6 @@ const Apply = () => {
     cat: '',
   });
   const [err, setError] = useState(null);
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

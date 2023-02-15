@@ -14,7 +14,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { login } = useContext(AuthContext);
+  const { login, currentUser } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,7 +24,11 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
-      navigate('/apply');
+      if (currentUser?.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/apply');
+      }
     } catch (err) {
       setError(err.response.data);
     }

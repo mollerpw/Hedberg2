@@ -3,7 +3,7 @@ $lightBlue: #3c6897;
 .app {
   justify-content: center;
   .container {
-    //width: 1024px;
+    width: 100vw;
 
     .link {
       text-decoration: none;
@@ -180,7 +180,7 @@ $lightBlue: #3c6897;
       font-size: 12px;
       position: absolute;
       bottom: 0;
-      width: 95%;
+      width: 97.9%;
       img {
         height: 50px;
       }

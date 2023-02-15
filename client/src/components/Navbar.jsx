@@ -2,9 +2,16 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
 import Logo from '../img/hedberg-top.png';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await logout();
+    navigate('/');
+  };
 
   return (
     <div className='navbar'>
@@ -18,9 +25,11 @@ const Navbar = () => {
           <Link className='link' to='/'>
             <h6>Hem</h6>
           </Link>
-          <Link className='link' to='/apply'>
-            <h6>Ansök</h6>
-          </Link>
+          {currentUser?.role !== 'admin' && (
+            <Link className='link' to='/apply'>
+              <h6>Ansök</h6>
+            </Link>
+          )}
           <Link className='link' to='/winners'>
             <h6>Tidigare pristagare</h6>
           </Link>
@@ -37,7 +46,7 @@ const Navbar = () => {
           )}
           <span>{currentUser?.username}</span>
           {currentUser ? (
-            <span className='write' onClick={logout}>
+            <span className='write' onClick={handleLogout}>
               Logout
             </span>
           ) : (
