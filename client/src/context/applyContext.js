@@ -5,7 +5,7 @@ export const ApplyContext = createContext();
 
 export const ApplyContexProvider = ({ children }) => {
   const [applications, setApplications] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {

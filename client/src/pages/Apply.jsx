@@ -25,7 +25,7 @@ const Apply = () => {
       )[0];
       setMyApplication(myApplication);
     }
-  }, [currentUser]);
+  }, [currentUser, applications]);
 
   const [inputs, setInputs] = useState({
     title: '',

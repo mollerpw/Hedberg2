@@ -50,7 +50,7 @@ const Single = () => {
       <div className='content'>
         {post.img && (
           <a href={`../upload/${post?.img}`} alt=''>
-            Pdf bilaga
+           {post.img}
           </a>
         )}
         <div className='user'>

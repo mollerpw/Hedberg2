@@ -45,7 +45,7 @@ const Winners = () => {
         </select>
       </div>
       <div className='posts'>
-        {winners.map((winner) => (
+        {winners?.map((winner) => (
           <div className='post' key={winner.id}>
             <div className='content'>
               <h1>

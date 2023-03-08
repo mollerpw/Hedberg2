@@ -5,10 +5,98 @@ $lightBlue: #3c6897;
   .container {
     width: 100vw;
 
+    /* 
+=================
+Table
+=====================
+*/
+
+    .table_container {
+      max-width: 75vw;
+      /* max-height: 500px; */
+      margin: 0 auto;
+      overflow: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-spacing: 0;
+    }
+
+    caption {
+      font-style: italic;
+      font-size: 90%;
+      margin-bottom: 10px;
+    }
+
+    .table th {
+      background: #fff;
+      padding: 8px 10px;
+      border-bottom: 1px solid #1a1a1a;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .table th.up {
+      background-image: url('./img/up_arrow.png');
+    }
+    .table th.down {
+      background-image: url('./img/down_arrow.png');
+    }
+    .table th.default {
+      background-image: url('./img/default.png');
+    }
+    th.up,
+    th.default,
+    th.down {
+      cursor: pointer;
+      background-repeat: no-repeat;
+      background-position: center right;
+    }
+
+    .table td {
+      border-top: 1px solid #ddd;
+      padding: 8px 20px;
+    }
+    td:hover {
+      cursor: pointer;
+    }
+    .table tbody tr:first-child td {
+      border-top: none;
+    }
+
+    .table tbody tr:nth-child(n) td {
+      background: #eff0f0;
+    }
+
+    .table tbody tr:nth-child(2n) td {
+      background: #fff;
+    }
+
+    .read-more-button {
+      width: max-content;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+      background-color: white;
+      border: 1px solid teal;
+      color: teal;
+      &:hover {
+        border: 1px solid white;
+        background-color: $lightBlue;
+        color: black;
+      }
+    }
     .link {
       text-decoration: none;
       color: inherit;
     }
+    td {
+      border: 1px solid black;
+      margin: 0px 0px;
+      padding: 5px 5px;
+    }
+
     //LOGIN & REGISTER
 
     .Apply {
@@ -136,6 +224,9 @@ $lightBlue: #3c6897;
           gap: 10px;
           color: white;
           margin-right: 50px;
+          :hover {
+            background-color: rgb(78, 111, 148);
+          }
           h6 {
             font-size: 16px;
             font-weight: 300;

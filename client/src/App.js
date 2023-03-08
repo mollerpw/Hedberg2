@@ -16,6 +16,7 @@ import Winners from './pages/Winners';
 import Gdpr from './pages/Gdpr';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
 import './style.scss';
 
 const Layout = () => {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: '/admin',
         element: <Admin />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },
