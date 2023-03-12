@@ -154,7 +154,7 @@ Table
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 10vh;
+      margin-top: 5vh;
       width: 100%;
       background-color: white;
 
@@ -399,6 +399,13 @@ Table
           width: 100%;
           height: 300px;
           object-fit: cover;
+        }
+        button {
+          padding: 10px;
+          border: none;
+          background-color: teal;
+          cursor: pointer;
+          color: white;
         }
 
         .user {

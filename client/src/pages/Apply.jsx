@@ -100,27 +100,33 @@ const Apply = () => {
               {/* If start of application */}
               <h1>Påbörja din ansökan här!</h1>
               <form>
+                <label>Titel</label>
                 <input
                   required
                   type='text'
-                  placeholder='title'
+                  placeholder='Titel'
                   name='title'
                   onChange={handleChange}
                 />
+                <br />
+                <label>Sammanfattning</label>
                 <input
                   required
                   type='text'
-                  placeholder='desc'
+                  placeholder='Sammanfattning'
                   name='desc'
                   onChange={handleChange}
                 />
+                <br />
+                <label>Kategori</label>
                 <input
                   required
                   type='text'
-                  placeholder='cat'
+                  placeholder='Kategori'
                   name='cat'
                   onChange={handleChange}
                 />
+                <br />
                 <button onClick={handleSubmit}>Nästa</button>
               </form>
             </>
