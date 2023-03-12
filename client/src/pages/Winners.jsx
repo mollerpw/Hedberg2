@@ -19,7 +19,9 @@ const Winners = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/winners?year=${year}`);
-        setWinners(res.data);
+        if (Array.isArray(res.data)) {
+          setWinners(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
