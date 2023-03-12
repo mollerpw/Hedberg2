@@ -46,7 +46,7 @@ const Winners = () => {
           <option value='2017'>2017</option>
         </select>
       </div>
-      <div className='posts'>
+      <div style={{ textAlign: 'center' }} className='posts'>
         {!winners ? (
           <></>
         ) : (

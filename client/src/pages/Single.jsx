@@ -13,6 +13,7 @@ import { ApplyContext } from '../context/applyContext';
 const Single = () => {
   const [post, setPost] = useState({});
   const { applications } = useContext(ApplyContext) || null;
+  const applicationIndex = applications.map((o) => o.id);
   const minId = Math.min(...applications.map((o) => o.id));
   const maxId = Math.max(...applications.map((o) => o.id));
   const [grade, setGrade] = useState('0');
@@ -85,104 +86,141 @@ const Single = () => {
           <Link className='link' to='/admin'>
             Gå tillbaka
           </Link>
-          <div>
-            {postId == minId ? (
-              <button style={{ margin: '10px' }} disabled>
-                {' '}
-                Föregående ansökan
-              </button>
-            ) : (
-              <button
-                style={{ margin: '10px' }}
-                onClick={() => navigate(`/post/${parseInt(postId) - 1}`)}
-              >
-                Föregående ansökan
-              </button>
-            )}
-            {postId == maxId ? (
-              <button disabled> Nästa ansökan</button>
-            ) : (
-              <button onClick={() => navigate(`/post/${parseInt(postId) + 1}`)}>
-                Nästa ansökan
-              </button>
-            )}
-          </div>
-          <form className='grades'>
-            <input
-              value='1'
-              checked={grade === '1'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('1')}
-            />{' '}
-            1
-            <input
-              value='2'
-              checked={grade === '2'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('2')}
-            />{' '}
-            2
-            <input
-              value='3'
-              checked={grade === '3'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('3')}
-            />{' '}
-            3
-            <input
-              value='4'
-              checked={grade === '4'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('4')}
-            />{' '}
-            4
-            <input
-              value='5'
-              checked={grade === '5'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('5')}
-            />{' '}
-            5
-            <input
-              value='0'
-              checked={grade === '0'}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='radio'
-              onChange={(e) => setGrade('0')}
-            />{' '}
-            Avstå att betygsätta
-            <button
-              onClick={handleSubmit}
-              name='grade'
-              style={{ marginLeft: '20px' }}
-              type='submit'
-            >
-              Spara betyg
-            </button>
-          </form>
-          {post.img && (
-            <div>
-              <h3>Bilagor:</h3>
-              <a href={`../upload/${post?.img}`} alt=''>
-                {post.img}
-              </a>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: '3vh',
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <h3 style={{ marginRight: '1vh' }}> Ansökan </h3>
+                  <h3 style={{ marginRight: '1vh' }}>
+                    {applicationIndex.indexOf(post.id) + 1}
+                  </h3>
+                  <h3 style={{ marginRight: '1vh' }}> av </h3>
+                  <h3>{applicationIndex.slice(-1)}</h3>
+                </div>
+                <div>
+                  {postId == minId ? (
+                    <button
+                      style={{ margin: '10px', backgroundColor: 'gray' }}
+                      disabled
+                    >
+                      {' '}
+                      Föregående ansökan
+                    </button>
+                  ) : (
+                    <button
+                      style={{ margin: '10px' }}
+                      onClick={() => navigate(`/post/${parseInt(postId) - 1}`)}
+                    >
+                      Föregående ansökan
+                    </button>
+                  )}
+                  {postId == maxId ? (
+                    <button disabled style={{ backgroundColor: 'gray' }}>
+                      {' '}
+                      Nästa ansökan
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate(`/post/${parseInt(postId) + 1}`)}
+                    >
+                      Nästa ansökan
+                    </button>
+                  )}
+                </div>
+                <form className='grades'>
+                  <input
+                    value='1'
+                    checked={grade === '1'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('1')}
+                  />{' '}
+                  1
+                  <input
+                    value='2'
+                    checked={grade === '2'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('2')}
+                  />{' '}
+                  2
+                  <input
+                    value='3'
+                    checked={grade === '3'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('3')}
+                  />{' '}
+                  3
+                  <input
+                    value='4'
+                    checked={grade === '4'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('4')}
+                  />{' '}
+                  4
+                  <input
+                    value='5'
+                    checked={grade === '5'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('5')}
+                  />{' '}
+                  5
+                  <input
+                    value='0'
+                    checked={grade === '0'}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='radio'
+                    onChange={(e) => setGrade('0')}
+                  />{' '}
+                  Avstå att betygsätta
+                  <button
+                    onClick={handleSubmit}
+                    name='grade'
+                    style={{ marginLeft: '20px' }}
+                    type='submit'
+                  >
+                    Spara betyg
+                  </button>
+                </form>
+              </div>
             </div>
-          )}
+            <div style={{ justifyContent: 'flex-end', display: 'flex' }}>
+              {post.img && (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    marginRight: '5vh',
+                  }}
+                >
+                  <h3>Bilagor:</h3>
+                  <a href={`../upload/${post?.img}`} alt=''>
+                    {post.img}
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
           <div className='user'>
             {post.userImg && <img src={post.userImg} alt='' />}
             <div className='info'>
-              <span>{post.username}</span>
+              <span>Namn: {post.username}</span>
               <p>Upplagd {moment(post.date).format('YYYY-MM-DD HH:mm:ss')}</p>
             </div>
             {currentUser?.username === post.username && (
@@ -190,7 +228,7 @@ const Single = () => {
                 <Link to={`/write?edit=2`} state={post}>
                   <img src={Edit} alt='' />
                 </Link>
-                <img onClick={handleDelete} src={Delete} alt='' />/
+                <img onClick={handleDelete} src={Delete} alt='' />
               </div>
             )}
           </div>

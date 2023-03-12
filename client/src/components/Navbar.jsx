@@ -25,7 +25,7 @@ const Navbar = () => {
           <Link className='link' to='/'>
             <h6>Hem</h6>
           </Link>
-          {currentUser?.role !== 'admin' && (
+          {currentUser?.role === 'user' && (
             <Link className='link' to='/apply'>
               <h6>Ansök</h6>
             </Link>
@@ -39,7 +39,7 @@ const Navbar = () => {
           <Link className='link' to='/contact'>
             <h6>Kontaktinfo</h6>
           </Link>
-          {currentUser?.role === 'admin' && (
+          {currentUser?.role !== 'user' && (
             <Link className='link' to='/admin'>
               Adminsida
             </Link>

@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login(inputs);
-      if (currentUser?.role === 'admin') {
+      if (currentUser?.role === 'admin' || 'lawyer') {
         navigate('/admin');
       } else {
         navigate('/apply');

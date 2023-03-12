@@ -4,18 +4,32 @@ import { Link } from 'react-router-dom';
 import { useTable, useSortBy } from 'react-table';
 import Table from '../components/Table';
 import axios from 'axios';
+import { AuthContext } from '../context/authContext';
 
 function Admin() {
+  const { currentUser } = useContext(AuthContext);
   const [applications, setApplications] = useState() || null;
   const [grades, setGrades] = useState() || null;
+  const [show, setShow] = useState() || 'false';
+  let approvedApplications = [];
+  let shownApplication = [];
+  
   let applicationsWithId = null;
+  console.log(shownApplication);
+
+  console.log(applications);
+
   if (applications != null && grades != null) {
     applicationsWithId = applications.map((t1) => ({
       ...t1,
       ...grades.find((t2) => t2.applicationid === t1.id),
     }));
     console.log(applicationsWithId);
+    approvedApplications = applicationsWithId.filter(
+      (e) => e.approved === 'true'
+    );
   }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,24 +46,66 @@ function Admin() {
   }, []);
 
   console.log(applications);
+
+  const handleChange = (e) => {
+    if (show === 'false') {
+      shownApplication = approvedApplications;
+      console.log(shownApplication);
+      setShow('true');
+    } else {
+      shownApplication = applicationsWithId;
+      console.log(shownApplication);
+      setShow('false');
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(applications);
+    const inputs = applications.map(({ approved, id }) => ({ approved, id }));
+    console.log(inputs);
+    try {
+      inputs.forEach(async (q) => {
+        await axios.put(`/posts/approved`, q);
+      });
+    } catch (err) {}
+  };
+
   const columns = [
-    { label: 'Id', accessor: 'id', sortable: true },
+    { label: 'Id', accessor: 'id', sortable: true, sortbyOrder: 'asc' },
     {
       label: 'Namn',
       accessor: 'username',
       sortable: true,
-      sortbyOrder: 'desc',
     },
-    { label: 'Titel', accessor: 'title', sortable: true, sortbyOrder: 'desc' },
+    { label: 'Titel', accessor: 'title', sortable: true },
     // {
     //   label: 'Beskrivning',
     //   accessor: 'desc',
     //   sortable: true,
     //   sortbyOrder: 'desc',
     // },
-    { label: 'Kategori', accessor: 'cat', sortable: true, sortbyOrder: 'desc' },
+    { label: 'Kategori', accessor: 'cat', sortable: true },
     { label: 'Datum', accessor: 'date', sortable: true },
     { label: 'Mitt betyg', accessor: 'grade', sortable: false },
+  ];
+  const columns2 = [
+    { label: 'Id', accessor: 'id', sortable: true, sortbyOrder: 'asc' },
+    {
+      label: 'Namn',
+      accessor: 'username',
+      sortable: true,
+    },
+    { label: 'Titel', accessor: 'title', sortable: true },
+    // {
+    //   label: 'Beskrivning',
+    //   accessor: 'desc',
+    //   sortable: true,
+    //   sortbyOrder: 'desc',
+    // },
+    { label: 'Kategori', accessor: 'cat', sortable: true },
+    { label: 'Datum', accessor: 'date', sortable: true },
+    { label: 'Godkänd', accessor: 'approved', sortable: false },
   ];
   return (
     // <div>
@@ -76,9 +132,38 @@ function Admin() {
     //       </tr>
 
     <div className='table_container'>
-      {applications && (
+      {applications && currentUser.role === 'lawyer' ? (
         <>
           <h1>Adminsida</h1>
+          {applicationsWithId ? (
+            <>
+              <Table
+                caption='Ansökningar'
+                data={applications}
+                columns={columns2}
+                setState={setApplications}
+              />
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  marginTop: '2vh',
+                }}
+              >
+                <button onClick={handleSubmit}>Spara</button>
+              </div>
+            </>
+          ) : (
+            <h1>Laddar...</h1>
+          )}
+        </>
+      ) : (
+        <>
+          <h1>Adminsida</h1>
+          {/* <label style={{ marginRight: '2vh' }}>
+            Visa endast godkända ansökningar
+          </label>
+          <input onChange={handleChange} type='checkbox' /> */}
           {applicationsWithId ? (
             <Table
               caption='Ansökningar'
