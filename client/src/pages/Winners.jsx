@@ -19,7 +19,7 @@ const Winners = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`/winners?year=${year}`);
-        setWinners(res?.data);
+        setWinners(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -45,17 +45,23 @@ const Winners = () => {
         </select>
       </div>
       <div className='posts'>
-        {winners?.map((winner) => (
-          <div className='post' key={winner.id}>
-            <div className='content'>
-              <h1>
-                {getText(winner.firstname)} {getText(winner.lastname)}{' '}
-                {getText(winner.prize)}:-
-              </h1>
-              <p>{getText(winner.projectname)}</p>
-            </div>
-          </div>
-        ))}
+        {!winners ? (
+          <></>
+        ) : (
+          <>
+            {winners?.map((winner) => (
+              <div className='post' key={winner.id}>
+                <div className='content'>
+                  <h1>
+                    {getText(winner.firstname)} {getText(winner.lastname)}{' '}
+                    {getText(winner.prize)}:-
+                  </h1>
+                  <p>{getText(winner.projectname)}</p>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </>
   );
