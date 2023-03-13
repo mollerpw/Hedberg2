@@ -1,36 +1,38 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const TableBody = ({ tableData, columns, setState }) => {
+  const [currentData, setCurrentData] = useState(tableData);
+  useEffect(() => {
+    setCurrentData(tableData);
+  }, [tableData]);
   const navigate = useNavigate();
-  console.log(tableData);
 
   const handleOnChange = (id) => {
-    const thisData = tableData.filter((e) => e.id === id);
-    console.log(thisData[0]);
+    const thisData = currentData.filter((e) => e.id === id);
     if (thisData[0].approved === 'true') {
       thisData[0].approved = 'false';
-      tableData = tableData.map((t1) => ({
+      currentData = currentData.map((t1) => ({
         ...t1,
         ...thisData.find((t2) => t2.id === t1.id),
       }));
-      console.log(tableData);
-      setState(tableData);
+      setState(currentData);
     } else {
       thisData[0].approved = 'true';
-      tableData = tableData.map((t1) => ({
+      currentData = currentData.map((t1) => ({
         ...t1,
         ...thisData.find((t2) => t2.id === t1.id),
       }));
-      console.log(tableData);
-      setState(tableData);
+      console.log(currentData);
+      setState(currentData);
     }
   };
 
   return (
     <tbody>
-      {tableData.map((data) => {
+      {currentData.map((data) => {
         return (
-          <tr>
+          <tr key={data.id}>
             {columns.map(({ accessor }) => {
               if (accessor === 'approved') {
                 return (

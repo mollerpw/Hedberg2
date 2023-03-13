@@ -1,13 +1,18 @@
-import TableBody from "./TableBody";
-import TableHead from "./TableHead";
-import { useSortableTable, getDefaultSorting } from "../useSortableTable";
+import TableBody from './TableBody';
+import TableHead from './TableHead';
+import { useSortableTable, getDefaultSorting } from '../useSortableTable';
+import { useEffect, useState } from 'react';
 
 const Table = ({ caption, data, columns, setState }) => {
-  const [tableData, handleSorting] = useSortableTable(data, columns);
+  const [data2, setData2] = useState(data) || data;
+  const [tableData, handleSorting] = useSortableTable(data2, columns);
+  useEffect(() => {
+    setData2(data);
+  }, [data]);
 
   return (
     <>
-      <table className="table">
+      <table className='table'>
         <caption>{caption}</caption>
         <TableHead {...{ columns, handleSorting }} />
         <TableBody {...{ columns, tableData, setState }} />

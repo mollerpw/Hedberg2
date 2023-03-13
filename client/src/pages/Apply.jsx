@@ -13,6 +13,7 @@ const Apply = () => {
   const { applications } = useContext(ApplyContext) || null;
   const [myApplication, setMyApplication] = useState();
   const navigate = useNavigate();
+  console.log(myApplication);
 
   if (currentUser?.role === 'admin') {
     navigate('/admin');
@@ -20,9 +21,12 @@ const Apply = () => {
 
   useEffect(() => {
     if (currentUser) {
+      console.log(applications);
+      console.log(currentUser);
       const myApplication = applications.filter(
         (application) => application.uid == currentUser.id
       )[0];
+      console.log(myApplication);
       setMyApplication(myApplication);
     }
   }, [currentUser, applications]);

@@ -23,10 +23,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(inputs);
-      if (currentUser?.role === 'admin' || 'lawyer') {
+      let user = await login(inputs);
+      if (user.role != 'user') {
+        console.log(user);
         navigate('/admin');
       } else {
+        console.log(user.role);
         navigate('/apply');
       }
     } catch (err) {

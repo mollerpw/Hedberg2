@@ -10,51 +10,67 @@ function Admin() {
   const { currentUser } = useContext(AuthContext);
   const [applications, setApplications] = useState() || null;
   const [grades, setGrades] = useState() || null;
-  const [show, setShow] = useState() || 'false';
+  const [show, setShow] = useState() || null;
+  const [currentUserReady, setCurrentUserReady] = useState() || null;
+  const [shownApplication, setShownApplication] = useState();
   let approvedApplications = [];
-  let shownApplication = [];
-  
+
   let applicationsWithId = null;
   console.log(shownApplication);
-
-  console.log(applications);
 
   if (applications != null && grades != null) {
     applicationsWithId = applications.map((t1) => ({
       ...t1,
       ...grades.find((t2) => t2.applicationid === t1.id),
     }));
-    console.log(applicationsWithId);
     approvedApplications = applicationsWithId.filter(
       (e) => e.approved === 'true'
     );
   }
+  useEffect(() => {
+    if (currentUser) {
+      setCurrentUserReady(true);
+    }
+  }, [currentUser]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/grades?userid=${'4'}`);
+        const res = await axios.get(`/grades?userid=${currentUser.id}`);
         setGrades(res.data);
-        console.log(res.data);
         const res2 = await axios.get(`/posts`);
         setApplications(res2.data);
+        applicationsWithId = res2.data.map((t1) => ({
+          ...t1,
+          ...res.data.find((t2) => t2.applicationid === t1.id),
+        }));
+        approvedApplications = applicationsWithId.filter(
+          (e) => e.approved === 'true'
+        );
+        setShow('false');
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, []);
+  }, [currentUserReady]);
+
+  useEffect(() => {
+    if (show === 'true') {
+      setShownApplication(approvedApplications);
+      console.log(approvedApplications);
+    } else {
+      setShownApplication(applicationsWithId);
+      console.log(applicationsWithId);
+    }
+  }, [show]);
 
   console.log(applications);
 
   const handleChange = (e) => {
     if (show === 'false') {
-      shownApplication = approvedApplications;
-      console.log(shownApplication);
       setShow('true');
     } else {
-      shownApplication = applicationsWithId;
-      console.log(shownApplication);
       setShow('false');
     }
   };
@@ -160,14 +176,14 @@ function Admin() {
       ) : (
         <>
           <h1>Adminsida</h1>
-          {/* <label style={{ marginRight: '2vh' }}>
+          <label style={{ marginRight: '2vh' }}>
             Visa endast godkända ansökningar
           </label>
-          <input onChange={handleChange} type='checkbox' /> */}
-          {applicationsWithId ? (
+          <input onChange={handleChange} type='checkbox' />
+          {shownApplication ? (
             <Table
               caption='Ansökningar'
-              data={applicationsWithId}
+              data={shownApplication}
               columns={columns}
             />
           ) : (
