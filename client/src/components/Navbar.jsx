@@ -25,6 +25,11 @@ const Navbar = () => {
           <Link className='link' to='/'>
             <h6>Hem</h6>
           </Link>
+          {!currentUser && (
+            <Link className='link' to='/apply'>
+              <h6>Ansök</h6>
+            </Link>
+          )}
           {currentUser?.role === 'user' && (
             <Link className='link' to='/apply'>
               <h6>Ansök</h6>
@@ -39,12 +44,14 @@ const Navbar = () => {
           <Link className='link' to='/contact'>
             <h6>Kontaktinfo</h6>
           </Link>
-          {currentUser?.role !== 'user' && (
+          {currentUser && currentUser?.role !== 'user' && (
             <Link className='link' to='/admin'>
               Adminsida
             </Link>
           )}
-          <span>{currentUser?.username}</span>
+          <Link className='link' to='/profile'>
+            {currentUser?.firstname}
+          </Link>
           {currentUser ? (
             <span className='write' onClick={handleLogout}>
               Logout

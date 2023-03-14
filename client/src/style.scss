@@ -3,7 +3,9 @@ $lightBlue: #3c6897;
 .app {
   justify-content: center;
   .container {
-    width: 100vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
     /* 
 =================
@@ -229,6 +231,7 @@ Table
         align-items: center;
         justify-content: space-between;
         background-color: $lightBlue;
+        flex-direction: row;
         .logo {
           img {
             height: 100%;
@@ -280,7 +283,8 @@ Table
 
     footer {
       margin-top: 100px;
-      padding: 20px;
+      padding-top: 10px;
+      padding-bottom: 10px;
       background-color: $lightBlue;
       display: flex;
       align-items: center;
@@ -288,9 +292,13 @@ Table
       font-size: 12px;
       position: absolute;
       bottom: 0;
-      width: 97.9%;
+      width: 100%;
       img {
         height: 50px;
+        margin-left: 2rem;
+      }
+      span {
+        margin-right: 2rem;
       }
     }
     .dropdown {
@@ -550,7 +558,7 @@ Table
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: space-evenly;
           font-size: 12px;
           color: #555;
 

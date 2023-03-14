@@ -16,6 +16,7 @@ import Winners from './pages/Winners';
 import Gdpr from './pages/Gdpr';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import Adminprocess from './pages/Adminprocess';
 import NotFound from './pages/NotFound';
 import './style.scss';
 
@@ -74,6 +75,11 @@ const router = createBrowserRouter([
         path: '/admin',
         element: <Admin />,
       },
+      {
+        path: '/adminprocess',
+        element: <Adminprocess />,
+      },
+      // This should be last path
       {
         path: '*',
         element: <NotFound />,

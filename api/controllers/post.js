@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 export const getPosts = (req, res) => {
   const q = req.query.cat
     ? 'SELECT * FROM posts WHERE cat=?'
-    : 'SELECT p.id, `username`, p.uid, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date`, `approved` FROM users u JOIN posts p ON u.id = p.uid';
+    : 'SELECT p.id, CONCAT_WS(" ", firstName, lastname ) AS firstname, p.uid, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date`, `approved` FROM users u JOIN posts p ON u.id = p.uid';
 
   db.query(q, [req.query.cat], (err, data) => {
     if (err) return res.status(500).send(err);
@@ -15,7 +15,7 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   const q =
-    'SELECT p.id, `username`, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ';
+    'SELECT p.id, CONCAT_WS(" ", firstName, lastname ) AS firstname, `title`, `desc`, p.img, u.img AS userImg, `cat`,`date` FROM users u JOIN posts p ON u.id = p.uid WHERE p.id = ? ';
 
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -88,18 +88,18 @@ export const updatePost = (req, res) => {
   });
 };
 
-export const updateApprovedStatus = (req, res) => {
-  const token = req.cookies.access_token;
-  if (!token) return res.status(401).json('Not authenticated!');
+// export const updateApprovedStatus = (req, res) => {
+//   const token = req.cookies.access_token;
+//   if (!token) return res.status(401).json('Not authenticated!');
 
-  jwt.verify(token, 'jwtkey', (err, userInfo) => {
-    if (err) return res.status(403).json('Token is not valid!');
-    const values = [req.body.approved, req.body.id];
-    const q = 'UPDATE posts SET `approved`= ? WHERE `id` = ?';
+//   jwt.verify(token, 'jwtkey', (err, userInfo) => {
+//     if (err) return res.status(403).json('Token is not valid!');
+//     const values = [req.body.approved, req.body.id];
+//     const q = 'UPDATE posts SET `approved`= ? WHERE `id` = ?';
 
-    db.query(q, [...values], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.json('Post has been updated.');
-    });
-  });
-};
+//     db.query(q, [...values], (err, data) => {
+//       if (err) return res.status(500).json(err);
+//       return res.json('Post has been updated.');
+//     });
+//   });
+// };

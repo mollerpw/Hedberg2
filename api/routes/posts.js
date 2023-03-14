@@ -5,7 +5,6 @@ import {
   getPost,
   getPosts,
   updatePost,
-  updateApprovedStatus,
 } from '../controllers/post.js';
 
 const router = express.Router();
@@ -14,7 +13,7 @@ router.get('/', getPosts);
 router.get('/:id', getPost);
 router.post('/', addPost);
 router.delete('/:id', deletePost);
-//router.put('/:id', updatePost);
-router.put('/approved', updateApprovedStatus);
+router.put('/:id', updatePost);
+//router.put('/approved', updateApprovedStatus);
 
 export default router;

@@ -91,7 +91,7 @@ function Admin() {
     { label: 'Id', accessor: 'id', sortable: true, sortbyOrder: 'asc' },
     {
       label: 'Namn',
-      accessor: 'username',
+      accessor: 'firstname',
       sortable: true,
     },
     { label: 'Titel', accessor: 'title', sortable: true },
@@ -109,7 +109,7 @@ function Admin() {
     { label: 'Id', accessor: 'id', sortable: true, sortbyOrder: 'asc' },
     {
       label: 'Namn',
-      accessor: 'username',
+      accessor: 'firstname',
       sortable: true,
     },
     { label: 'Titel', accessor: 'title', sortable: true },
@@ -175,7 +175,24 @@ function Admin() {
         </>
       ) : (
         <>
-          <h1>Adminsida</h1>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: '1rem',
+              minWidth: '50rem',
+            }}
+          >
+            <h1>Adminsida</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+              <Link className='link'>
+                <button style={{ marginRight: '1rem' }}>Betygsätt</button>
+              </Link>
+              <Link className='link' to={'/adminprocess'}>
+                <button>Administrera betygsprocess</button>
+              </Link>
+            </div>
+          </div>
           <label style={{ marginRight: '2vh' }}>
             Visa endast godkända ansökningar
           </label>
@@ -200,7 +217,7 @@ function Admin() {
 //   to={`/post/${application.id}`}
 // >
 //   <h1>
-//     {application.title} {application.username}
+//     {application.title} {application.firstname}
 //   </h1>
 // </Link>
 //     ))}

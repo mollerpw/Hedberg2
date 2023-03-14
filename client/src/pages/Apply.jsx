@@ -18,7 +18,6 @@ const Apply = () => {
   if (currentUser?.role === 'admin') {
     navigate('/admin');
   }
-
   useEffect(() => {
     if (currentUser) {
       console.log(applications);
@@ -67,7 +66,7 @@ const Apply = () => {
               Logga in eller registrerar dig för att göra en ansökan till
               hedbergs
             </h1>
-            <span style={{ width: '100vh' }}>
+            <span style={{ width: '40rem' }}>
               Detta är en gemensam ansökningsportal för Hedbergs stiftelse och
               Norlins stiftelse (norlinsstiftelse.se). <br /> Du ska bara göra
               en ansökan oavsett om din ansökan avser Hedbergs stiftelse
@@ -89,12 +88,17 @@ const Apply = () => {
           {myApplication ? (
             <>
               <h1> Din ansökan</h1>
-              <p>{myApplication.title}</p>
-              <div> {myApplication.desc}</div>
+              <p style={{ marginBottom: '5vh' }}>
+                <b>{myApplication.title}</b>
+              </p>
+              {/* <div> {myApplication.desc}</div>
               <div>av</div>
-              <div>{currentUser.username}</div>
+              <div>{currentUser.firstname}</div> */}
               <div className='edit'>
-                <Link to={`/write?edit=2`} state={myApplication}>
+                <Link
+                  to={`/write?edit=${myApplication.id}`}
+                  state={myApplication}
+                >
                   <img src={Edit} alt='' />
                 </Link>
               </div>
@@ -103,7 +107,12 @@ const Apply = () => {
             <>
               {/* If start of application */}
               <h1>Påbörja din ansökan här!</h1>
-              <form>
+              <div className='edit'>
+                <Link to={`/write?edit=0`}>
+                  <img src={Edit} alt='' />
+                </Link>
+              </div>
+              {/* <form>
                 <label>Titel</label>
                 <input
                   required
@@ -132,7 +141,7 @@ const Apply = () => {
                 />
                 <br />
                 <button onClick={handleSubmit}>Nästa</button>
-              </form>
+              </form> */}
             </>
           )}
         </div>

@@ -18,7 +18,6 @@ const Single = () => {
   const maxId = Math.max(...applications.map((o) => o.id));
   const [grade, setGrade] = useState('0');
   const [oldGrade, setOldGrade] = useState() || null;
-
   console.log(grade);
   console.log(oldGrade);
 
@@ -220,10 +219,10 @@ const Single = () => {
           <div className='user'>
             {post.userImg && <img src={post.userImg} alt='' />}
             <div className='info'>
-              <span>Namn: {post.username}</span>
+              <span>Namn: {post.firstname}</span>
               <p>Upplagd {moment(post.date).format('YYYY-MM-DD HH:mm:ss')}</p>
             </div>
-            {currentUser?.username === post.username && (
+            {currentUser?.firstname === post.firstname && (
               <div className='edit'>
                 <Link to={`/write?edit=2`} state={post}>
                   <img src={Edit} alt='' />

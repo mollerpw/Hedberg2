@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken';
 
 export const register = (req, res) => {
   //CHECK EXISTING USER
-  const q = 'SELECT * FROM users WHERE email = ? OR username = ?';
+  const q = 'SELECT * FROM users WHERE email = ?';
 
-  db.query(q, [req.body.email, req.body.username], (err, data) => {
+  db.query(q, [req.body.email], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length) return res.status(409).json('Användare finns redan!');
 
@@ -14,8 +14,15 @@ export const register = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
-    const q = 'INSERT INTO users(`username`,`email`,`password`) VALUES (?)';
-    const values = [req.body.username, req.body.email, hash];
+    const q =
+      'INSERT INTO users(`firstname`, `lastname`, `email`,`password`, `role`) VALUES (?)';
+    const values = [
+      req.body.firstname,
+      req.body.lastname,
+      req.body.email,
+      hash,
+      'user',
+    ];
 
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -27,7 +34,8 @@ export const register = (req, res) => {
 export const login = (req, res) => {
   //CHECK USER
 
-  const q = 'SELECT * FROM users WHERE email = ?';
+  const q =
+    'SELECT *, CONCAT_WS(" ", firstName, lastname ) AS firstname FROM users WHERE email = ?';
 
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.status(500).json(err);

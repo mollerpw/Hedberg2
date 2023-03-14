@@ -7,10 +7,12 @@ import moment from 'moment';
 
 const Write = () => {
   const state = useLocation().state;
-  const [value, setValue] = useState(state?.title || '');
-  const [title, setTitle] = useState(state?.desc || '');
+  const [value, setValue] = useState(state?.desc || '');
+  const [title, setTitle] = useState(state?.title || '');
   const [file, setFile] = useState(null);
   const [cat, setCat] = useState(state?.cat || '');
+  const [oldFile, setOldFile] = useState(state?.img);
+  console.log(state);
 
   const navigate = useNavigate();
 
@@ -27,19 +29,21 @@ const Write = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    const imgUrl = await upload();
-
+    let imgUrl = '';
+    if (file) {
+      imgUrl = await upload();
+    }
     try {
       state
         ? await axios.put(`/posts/${state.id}`, {
             title,
-            desc: value,
+            desc: value.slice(3, -4),
             cat,
             img: file ? imgUrl : '',
           })
         : await axios.post(`/posts/`, {
             title,
-            desc: value,
+            desc: value.slice(3, -4),
             cat,
             img: file ? imgUrl : '',
             date: moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'),
@@ -53,11 +57,14 @@ const Write = () => {
   return (
     <div className='add'>
       <div className='content'>
+        <label>Titel:</label>
         <input
           type='text'
           placeholder='Title'
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        <label>Sammanfattning:</label>
         <div className='editorContainer'>
           <ReactQuill
             className='editor'
@@ -70,12 +77,11 @@ const Write = () => {
       <div className='menu'>
         <div className='item'>
           <h1>Bilagor</h1>
+          <span>Bifoga filer genom att trycka på ladda upp bilagor nedan</span>
           <span>
-            <b>Status: </b> Draft
+            <b>Tidigare uppladdade filer: </b>
           </span>
-          <span>
-            <b>Visibility: </b> Public
-          </span>
+          <span>{oldFile}</span>
           <input
             style={{ display: 'none' }}
             type='file'
@@ -86,35 +92,40 @@ const Write = () => {
           <label className='file' htmlFor='file'>
             Ladda upp bilagor
           </label>
+          {file?.name}
           <div className='buttons'>
-            <button>Save as a draft</button>
-            <button onClick={handleClick}>Publish</button>
+            {/* <button>Save as a draft</button> */}
+            <button onClick={handleClick}>Publisera</button>
           </div>
         </div>
         <div className='item'>
-          <h1>Category</h1>
+          <h1>Projektets natur:</h1>
           <div className='cat'>
             <input
               type='radio'
-              checked={cat === 'art'}
+              checked={cat === 'group'}
               name='cat'
-              value='art'
-              id='art'
+              value='group'
+              id='group'
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor='art'>Art</label>
+            <label htmlFor='group'>
+              Ansökan avser en specifik del inom ett större projekt
+            </label>
           </div>
           <div className='cat'>
             <input
               type='radio'
-              checked={cat === 'science'}
+              checked={cat === 'independent'}
               name='cat'
-              value='science'
-              id='science'
+              value='independent'
+              id='independent'
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor='science'>Science</label>
-          </div>
+            <label htmlFor='independent'>
+              Ansökan avser ett fristående projekt
+            </label>
+            {/* </div>
           <div className='cat'>
             <input
               type='radio'
@@ -157,7 +168,7 @@ const Write = () => {
               id='food'
               onChange={(e) => setCat(e.target.value)}
             />
-            <label htmlFor='food'>Food</label>
+            <label htmlFor='food'>Food</label> */}
           </div>
         </div>
       </div>

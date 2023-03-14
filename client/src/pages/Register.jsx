@@ -6,7 +6,8 @@ import validator from 'validator';
 
 const Register = () => {
   const [inputs, setInputs] = useState({
-    username: '',
+    firstname: '',
+    lastname: '',
     email: '',
     password: '',
   });
@@ -41,7 +42,7 @@ const Register = () => {
             required
             type='text'
             placeholder='Förnamn'
-            name='username'
+            name='firstname'
             onChange={handleChange}
           />
           <input

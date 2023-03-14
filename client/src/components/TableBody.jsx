@@ -39,7 +39,7 @@ const TableBody = ({ tableData, columns, setState }) => {
                   <td onClick={() => handleOnChange(data.id)} key={accessor}>
                     <input
                       style={{
-                        marginLeft: '10vh',
+                        marginLeft: '1.5rem',
                       }}
                       defaultChecked={data[accessor] === 'true'}
                       type='checkbox'
